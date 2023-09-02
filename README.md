@@ -1,21 +1,4 @@
-# Vite + React + TypeScript + Husky = 🔥
-
-A modern minimal Vite + React + TypeScript template with pre-configured ESLint, Prettier and Git hooks powered by Husky out of the box 📦
-
-## Features
-
-- 🦾 Up to date libraries version and their features
-- 🔎 Pre-configured and extensible ESLint configuration without wrong and unused rules designed for old React versions
-- 💅 Pre-configured and extensible Prettier configuration
-- 🔬 Git hooks for code formatting and linting pre-commit
-
-## Available commands
-
-Initialize repository
-
-```bash
-git init
-```
+# Weather App!
 
 Install dependencies
 
