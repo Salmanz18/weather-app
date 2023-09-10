@@ -1,5 +1,9 @@
 # Weather App!
 
+## App Mockup
+
+![App-Mockup-v1](./src//assets/app-mockup-v1.svg)
+
 Install dependencies
 
 ```bash
