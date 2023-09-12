@@ -2,3 +2,5 @@
 
 - [x] Project Setup
 - [x] Weather App Api Integration
+- [x] Fetch Geolocation
+- [] Search City Weather
