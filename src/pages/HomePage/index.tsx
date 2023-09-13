@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useGetGeoLocationByCityMutation, useGetWeatherByCityMutation } from '../../services/Api';
 import { Card } from '../../ui/components/Card';
 import { Search } from '../../ui/components/Search';
+import Loading from '../../ui/components/Loading';
 
 const HomePage = () => {
   const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
@@ -16,14 +17,6 @@ const HomePage = () => {
   }, [geoLocationStatus.isSuccess]);
 
   const renderWeather = () => {
-    if (weatherStatus.isLoading) {
-      return <h2>Loading weather...</h2>;
-    }
-
-    if (weatherStatus.isError) {
-      return <h2>Unable to Fetch Weather!</h2>;
-    }
-
     if (weatherStatus.isSuccess) {
       const temperatureInCelsius = weatherStatus.data.main.temp - 273.15;
       const feelsLikeTemperatureInCelsius = weatherStatus.data.main.feels_like - 273.15;
@@ -43,14 +36,6 @@ const HomePage = () => {
   };
 
   const renderGeolocation = () => {
-    if (geoLocationStatus.isLoading) {
-      return <h2>Loading geolocation data...</h2>;
-    }
-
-    if (geoLocationStatus.isError) {
-      return <h2>Something went wrong fetching geolocation data!</h2>;
-    }
-
     if (geoLocationStatus.isSuccess) {
       return (
         <div className="mt-2">
@@ -84,6 +69,15 @@ const HomePage = () => {
             <div className="flex justify-center">{renderGeolocation()}</div>
           </Card>
         )}
+
+        {weatherStatus.isLoading && <Loading />}
+
+        {weatherStatus.isError ||
+          (geoLocationStatus.isError && (
+            <Card className="flex mt-2 w-72">
+              <div>Failed to load Weather! Please check City!</div>
+            </Card>
+          ))}
       </div>
     </div>
   );

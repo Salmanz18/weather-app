@@ -1,5 +1,13 @@
 # Weather App!
 
+## Tech Stack
+- React
+- Typescript
+- Redux Toolkit
+- RTK Query
+- Styled Components
+- Tailwind CSS
+- Openweathermap API
 ## App Mockup
 
 ![App-Mockup-v1](./src//assets/app-mockup-v1.svg)

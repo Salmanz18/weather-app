@@ -4,4 +4,6 @@
 - [x] Weather App Api Integration
 - [x] Fetch Geolocation
 - [x] Search City Weather
-- [] Dark Mode
+- [ ] Enhance UI
+- [ ] Fetch Users Current Location and Show Weather
+- [ ] Dark Mode
