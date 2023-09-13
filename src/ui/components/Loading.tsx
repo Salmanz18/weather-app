@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const spin = keyframes`
@@ -19,7 +18,7 @@ const Spinner = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
-const Loading = () => {
+export const Loading = () => {
   return (
     <LoadingWrapper>
       <Spinner />
@@ -33,5 +32,3 @@ const LoadingWrapper = styled.div`
   align-items: center;
   height: 50vh;
 `;
-
-export default Loading;

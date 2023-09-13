@@ -11,7 +11,7 @@ export const weathersApi = createApi({
   endpoints: (builder) => ({
     getWeatherByCity: builder.mutation<WeatherData, { lat: number[]; lon: number[] }>({
       query: ({ lat, lon }) => ({
-        url: `/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+        url: `/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
         method: 'GET',
       }),
     }),
