@@ -3,4 +3,5 @@
 - [x] Project Setup
 - [x] Weather App Api Integration
 - [x] Fetch Geolocation
-- [] Search City Weather
+- [x] Search City Weather
+- [] Dark Mode

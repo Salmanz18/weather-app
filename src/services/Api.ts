@@ -9,22 +9,28 @@ export const weathersApi = createApi({
   reducerPath: 'weathersApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
-    weather: builder.query<WeatherData, void>({
-      query: () => `/weather?lat=28.644800&lon=77.216721&appid=${API_KEY}`,
+    getWeatherByCity: builder.mutation<WeatherData, { lat: number[]; lon: number[] }>({
+      query: ({ lat, lon }) => ({
+        url: `/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`,
+        method: 'GET',
+      }),
     }),
   }),
 });
 
-export const { useWeatherQuery } = weathersApi;
+export const { useGetWeatherByCityMutation } = weathersApi;
 
 export const weathersGeoApi = createApi({
   reducerPath: 'weathersGeoApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseUrlGeo }),
   endpoints: (builder) => ({
-    geolocation: builder.query<GeoLocation[], void>({
-      query: () => `/direct?q=Delhi&appid=${API_KEY}`,
+    getGeoLocationByCity: builder.mutation<GeoLocation[], string>({
+      query: (city) => ({
+        url: `/direct?q=${city}&appid=${API_KEY}`,
+        method: 'GET',
+      }),
     }),
   }),
 });
 
-export const { useGeolocationQuery } = weathersGeoApi;
+export const { useGetGeoLocationByCityMutation } = weathersGeoApi;
