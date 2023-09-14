@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl, baseUrlGeo } from '../utils/BaseUrl';
-import { WeatherData } from './Api/models/WeatherData';
-import { GeoLocation } from './Api/models/GeoLocation';
+import { WeatherData } from './Api/models/WeatherModel/WeatherData';
+import { GeoLocation } from './Api/models/GeoLocationModel/GeoLocation';
+import { Forecast } from './Api/models/ForecastModel/Forecast';
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
@@ -12,6 +13,12 @@ export const weathersApi = createApi({
     getWeatherByCity: builder.mutation<WeatherData, { lat: number[]; lon: number[] }>({
       query: ({ lat, lon }) => ({
         url: `/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+        method: 'GET',
+      }),
+    }),
+    getForecastByCity: builder.mutation<Forecast, { lat: number[]; lon: number[] }>({
+      query: ({ lat, lon }) => ({
+        url: `/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
         method: 'GET',
       }),
     }),
