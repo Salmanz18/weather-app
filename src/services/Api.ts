@@ -16,16 +16,16 @@ export const weathersApi = createApi({
         method: 'GET',
       }),
     }),
-    getForecastByCity: builder.mutation<Forecast, { lat: number[]; lon: number[] }>({
-      query: ({ lat, lon }) => ({
-        url: `/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
+    getForecastByCity: builder.mutation<Forecast, { lat: number[]; lon: number[]; cnt: number }>({
+      query: ({ lat, lon, cnt }) => ({
+        url: `/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&cnt=${cnt}`,
         method: 'GET',
       }),
     }),
   }),
 });
 
-export const { useGetWeatherByCityMutation } = weathersApi;
+export const { useGetWeatherByCityMutation, useGetForecastByCityMutation } = weathersApi;
 
 export const weathersGeoApi = createApi({
   reducerPath: 'weathersGeoApi',

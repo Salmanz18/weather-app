@@ -1,16 +1,25 @@
 import { useEffect } from 'react';
-import { useGetGeoLocationByCityMutation, useGetWeatherByCityMutation } from '../../services/Api';
+import {
+  useGetForecastByCityMutation,
+  useGetGeoLocationByCityMutation,
+  useGetWeatherByCityMutation,
+} from '../../services/Api';
 import { Card, Loading, Search } from '../../ui/components';
 
 const HomePage = () => {
   const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
   const [getWeather, weatherStatus] = useGetWeatherByCityMutation();
+  const [getForecast, forecastStatus] = useGetForecastByCityMutation();
+
+  const DEFAULT_FORECAST_COUNT = 10;
 
   useEffect(() => {
     const lat = geoLocationStatus.data?.map((item) => item.lat)!;
     const lon = geoLocationStatus.data?.map((item) => item.lon)!;
+    const cnt = DEFAULT_FORECAST_COUNT;
     if (lat && lon !== undefined) {
       getWeather({ lat, lon });
+      getForecast({ lat, lon, cnt });
     }
   }, [geoLocationStatus.isSuccess]);
 
@@ -66,6 +75,23 @@ const HomePage = () => {
     return null;
   };
 
+  const renderForecast = () => {
+    if (forecastStatus.isSuccess) {
+      return forecastStatus.data.list.map((item) => {
+        return (
+          <Card key={item.dt} className="m-2 w-fit p-2">
+            <div>{item.dt_txt}</div>
+            <div>Max. Temp: {item.main.temp_max}°C</div>
+            <div>Min. Temp: {item.main.temp_min}°C</div>
+            <div>Feels Like: {item.main.feels_like}°C</div>
+            <div>Humidity: {item.main.humidity}%</div>
+          </Card>
+        );
+      });
+    }
+    return null;
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="mt-2">
@@ -74,8 +100,8 @@ const HomePage = () => {
       {weatherStatus.isSuccess && geoLocationStatus.isSuccess && (
         <div className="flex flex-col justify-center">
           <div className="flex items-center justify-center mt-2">{renderGeoLocation()}</div>
-          <div className="flex">{renderWeather()}</div>
-          {/*TODO:  Future Forcast */}
+          <div className="flex justify-center items-center">{renderWeather()}</div>
+          <div className="flex flex-wrap justify-center items-center">{renderForecast()}</div>
         </div>
       )}
       {weatherStatus.isLoading && <Loading />}
