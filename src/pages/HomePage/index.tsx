@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   useGetForecastByCityMutation,
   useGetGeoLocationByCityMutation,
+  useGetIconByIdMutation,
   useGetWeatherByCityMutation,
 } from '../../services/Api';
 import { Card, Loading, Search } from '../../ui/components';
@@ -10,6 +11,7 @@ const HomePage = () => {
   const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
   const [getWeather, weatherStatus] = useGetWeatherByCityMutation();
   const [getForecast, forecastStatus] = useGetForecastByCityMutation();
+  const [getIcon, iconStatus] = useGetIconByIdMutation();
 
   const DEFAULT_FORECAST_COUNT = 10;
 
@@ -22,6 +24,16 @@ const HomePage = () => {
       getForecast({ lat, lon, cnt });
     }
   }, [geoLocationStatus.isSuccess]);
+
+  useEffect(() => {
+    if (weatherStatus.data) {
+      const iconId = weatherStatus.data?.weather[0].icon;
+      if (iconId !== undefined) {
+        getIcon(iconId);
+      }
+    }
+    return;
+  }, [weatherStatus.isSuccess]);
 
   const handleSearch = (city: string) => {
     getGeoLocation(city);
@@ -45,8 +57,13 @@ const HomePage = () => {
   };
 
   const renderWeather = () => {
+    const weatherIcon = iconStatus.data;
+    console.log(weatherIcon);
     if (weatherStatus.isSuccess) {
-      const { main } = weatherStatus.data;
+      console.log(weatherStatus.data);
+      const { main, weather } = weatherStatus.data;
+      const weatherType = weather.map((item) => item.main);
+
       return (
         <div className="flex">
           <Card className="m-2 w-fit p-2">
@@ -68,6 +85,10 @@ const HomePage = () => {
           <Card className="m-2 w-fit p-2">
             <div>Humidity</div>
             <div>{main.humidity}%</div>
+          </Card>
+          <Card className="m-2 w-fit p-2">
+            {/* <div>{weatherIcon}</div> */}
+            <div>{weatherType}</div>
           </Card>
         </div>
       );
