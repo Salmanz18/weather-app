@@ -19,6 +19,7 @@ export const Search = ({ onSearch, placeholder }: SearchProps) => {
 
   const handleSearch = () => {
     onSearch(text);
+    setText('');
   };
 
   return (
