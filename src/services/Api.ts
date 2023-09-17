@@ -10,13 +10,13 @@ export const weathersApi = createApi({
   reducerPath: 'weathersApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
-    getWeatherByCity: builder.mutation<WeatherData, { lat: number[]; lon: number[] }>({
+    getWeatherByCity: builder.mutation<WeatherData, { lat: number; lon: number }>({
       query: ({ lat, lon }) => ({
         url: `/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`,
         method: 'GET',
       }),
     }),
-    getForecastByCity: builder.mutation<Forecast, { lat: number[]; lon: number[]; cnt: number }>({
+    getForecastByCity: builder.mutation<Forecast, { lat: number; lon: number; cnt: number }>({
       query: ({ lat, lon, cnt }) => ({
         url: `/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&cnt=${cnt}`,
         method: 'GET',

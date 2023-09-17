@@ -1,27 +1,14 @@
 import { useEffect } from 'react';
 import { Card } from '../../ui/components';
-import {
-  useGetGeoLocationByCityMutation,
-  //   useGetIconByIdMutation,
-  useGetWeatherByCityMutation,
-} from '../../services/Api';
+import { useGetWeatherByCityMutation } from '../../services/Api';
 
-const Weather = ({ city }: WeatherProps) => {
-  const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
+const Weather = ({ geoLoc }: WeatherProps) => {
   const [getWeather, weatherStatus] = useGetWeatherByCityMutation();
   //   const [getIcon, iconStatus] = useGetIconByIdMutation();
 
   useEffect(() => {
-    getGeoLocation(city);
-  }, []);
-
-  useEffect(() => {
-    const lat = geoLocationStatus.data?.map((item) => item.lat)!;
-    const lon = geoLocationStatus.data?.map((item) => item.lon)!;
-    if (lat && lon !== undefined) {
-      getWeather({ lat, lon });
-    }
-  }, [geoLocationStatus.isSuccess]);
+    getWeather({ lat: geoLoc.lat, lon: geoLoc.lon });
+  }, [geoLoc]);
 
   useEffect(() => {
     if (weatherStatus.data) {
@@ -72,7 +59,10 @@ const Weather = ({ city }: WeatherProps) => {
 };
 
 interface WeatherProps {
-  city: string;
+  geoLoc: {
+    lat: number;
+    lon: number;
+  };
 }
 
 export default Weather;

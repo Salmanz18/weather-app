@@ -1,25 +1,16 @@
 import { useEffect } from 'react';
-import { useGetForecastByCityMutation, useGetGeoLocationByCityMutation } from '../../services/Api';
+import { useGetForecastByCityMutation } from '../../services/Api';
 import { Card } from '../../ui/components';
 
-const Forecast = ({ city }: ForecastProps) => {
-  const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
+const Forecast = ({ city, geoLoc }: ForecastProps) => {
   const [getForecast, forecastStatus] = useGetForecastByCityMutation();
 
   const DEFAULT_FORECAST_COUNT = 8;
 
   useEffect(() => {
-    getGeoLocation(city);
-  }, []);
-
-  useEffect(() => {
-    const lat = geoLocationStatus.data?.map((item) => item.lat)!;
-    const lon = geoLocationStatus.data?.map((item) => item.lon)!;
     const cnt = DEFAULT_FORECAST_COUNT;
-    if (lat && lon !== undefined) {
-      getForecast({ lat, lon, cnt });
-    }
-  }, [geoLocationStatus.isSuccess]);
+    getForecast({ lat: geoLoc.lat, lon: geoLoc.lon, cnt: cnt });
+  }, [city, geoLoc]);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -43,6 +34,7 @@ const Forecast = ({ city }: ForecastProps) => {
 
 interface ForecastProps {
   city: string;
+  geoLoc: { lat: number; lon: number };
 }
 
 export default Forecast;

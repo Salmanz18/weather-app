@@ -9,13 +9,16 @@ const HomePage = () => {
   const [getWeather, weatherStatus] = useGetWeatherByCityMutation();
 
   const [city, setCity] = useState('');
+  const [geoLoc, setGeoLoc] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
-    const lat = geoLocationStatus.data?.map((item) => item.lat)!;
-    const lon = geoLocationStatus.data?.map((item) => item.lon)!;
+    const lat = geoLocationStatus.data?.map((item) => Number(item.lat))!;
+    const lon = geoLocationStatus.data?.map((item) => Number(item.lon))!;
     if (lat && lon !== undefined) {
-      getWeather({ lat, lon });
+      setGeoLoc({ lat: lat[0], lon: lon[0] });
+      getWeather({ lat: lat[0], lon: lon[0] });
     }
+    return;
   }, [geoLocationStatus.isSuccess]);
 
   const handleSearch = (city: string) => {
@@ -54,10 +57,10 @@ const HomePage = () => {
         <div className="flex flex-col justify-center">
           <Card className="flex items-center justify-center mx-auto w-192 my-2">{renderGeoLocation()}</Card>
           <Card className="my-2">
-            <Weather city={city} />
+            <Weather geoLoc={geoLoc} />
           </Card>
           <Card className="flex my-2">
-            <Forecast city={city} />
+            <Forecast city={city} geoLoc={geoLoc} />
           </Card>
         </div>
       )}
