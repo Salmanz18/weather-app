@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, baseUrlGeo, baseUrlIcon } from '../utils/BaseUrl';
+import { baseUrl, baseUrlGeo } from '../utils/BaseUrl';
 import { WeatherData } from './Api/models/WeatherModel/WeatherData';
 import { GeoLocation } from './Api/models/GeoLocationModel/GeoLocation';
 import { Forecast } from './Api/models/ForecastModel/Forecast';
@@ -41,18 +41,3 @@ export const weathersGeoApi = createApi({
 });
 
 export const { useGetGeoLocationByCityMutation } = weathersGeoApi;
-
-export const weathersIconApi = createApi({
-  reducerPath: 'weathersIconApi',
-  baseQuery: fetchBaseQuery({ baseUrl: baseUrlIcon }),
-  endpoints: (builder) => ({
-    getIconById: builder.mutation<unknown, string>({
-      query: (iconId) => ({
-        url: `/img/wn/${iconId}@2x.png`,
-        method: 'GET',
-      }),
-    }),
-  }),
-});
-
-export const { useGetIconByIdMutation } = weathersIconApi;

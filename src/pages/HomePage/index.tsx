@@ -26,11 +26,23 @@ const HomePage = () => {
     setCity(city);
   };
 
+  const iconId = weatherStatus.data?.weather[0].icon;
+  const WEATHER_ICON_URL = `https://openweathermap.org/img/wn/${iconId}@2x.png`;
+
   const renderGeoLocation = () => {
     if (geoLocationStatus.isSuccess && weatherStatus.isSuccess) {
       return (
         <div className="flex flex col justify-center items-center">
-          <Card>{weatherStatus.data.weather.map((item) => item.main)}</Card>
+          <Card>
+            {weatherStatus.data.weather.map((item) => {
+              return (
+                <Card key={item.id} className="flex justify-center items-center w-72">
+                  <img src={WEATHER_ICON_URL} alt="img" />
+                  {item.main}
+                </Card>
+              );
+            })}
+          </Card>
           {geoLocationStatus.data.map((item) => (
             <div key={item.name}>
               <Card className="m-2 w-72 p-2">
