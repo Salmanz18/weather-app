@@ -29,30 +29,29 @@ const HomePage = () => {
   const iconId = weatherStatus.data?.weather[0].icon;
   const WEATHER_ICON_URL = `https://openweathermap.org/img/wn/${iconId}@2x.png`;
 
+  const temp = weatherStatus.data?.main.temp;
+
   const renderGeoLocation = () => {
     if (geoLocationStatus.isSuccess && weatherStatus.isSuccess) {
       return (
-        <div className="flex flex col justify-center items-center">
-          <Card>
-            {weatherStatus.data.weather.map((item) => {
-              return (
-                <Card key={item.id} className="flex justify-center items-center w-72">
-                  <img src={WEATHER_ICON_URL} alt="img" />
-                  {item.main}
-                </Card>
-              );
-            })}
-          </Card>
-          {geoLocationStatus.data.map((item) => (
-            <div key={item.name}>
-              <Card className="m-2 w-72 p-2">
-                <div>City: {item.name}</div>
-                <div>State: {item.state}</div>
-                <div>Country: {item.country}</div>
-                <div>Latitude: {item.lat}</div>
-                <div>Longitude: {item.lon}</div>
+        <div className="flex justify-around items-center">
+          {weatherStatus.data.weather.map((item) => {
+            return (
+              <Card key={item.id} className="flex justify-evenly items-center w-fit m-2 p-2">
+                <img src={WEATHER_ICON_URL} alt="img" />
+                <div className="flex flex-col">
+                  <div className="text-3xl">{temp}°C</div>
+                  <div>{item.main}</div>
+                </div>
               </Card>
-            </div>
+            );
+          })}
+          {geoLocationStatus.data.map((item) => (
+            <Card key={item.name} className="m-2 w-fit p-2">
+              <div className="text-2xl">City: {item.name}</div>
+              <div className="text-2xl">State: {item.state}</div>
+              <div className="text-2xl">Country: {item.country}</div>
+            </Card>
           ))}
         </div>
       );
