@@ -14,7 +14,7 @@ const Forecast = ({ city, geoLoc }: ForecastProps) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <p>Forecast:</p>
+      <p className="text-2xl">Forecast</p>
       <div className="flex flex-wrap justify-center items-center mx-auto w-192">
         {forecastStatus.data?.list.map((item) => {
           return (

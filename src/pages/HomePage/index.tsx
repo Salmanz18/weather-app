@@ -77,7 +77,7 @@ const HomePage = () => {
       )}
       {weatherStatus.isLoading && <Loading />}
       {(weatherStatus.isError || geoLocationStatus.isError) && (
-        <Card className="flex mt-2 w-72">
+        <Card className="flex mt-2 w-72 p-5">
           <div>Failed to load Weather! Please check City you entered!</div>
         </Card>
       )}

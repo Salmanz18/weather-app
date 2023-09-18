@@ -13,7 +13,7 @@ const Weather = ({ geoLoc }: WeatherProps) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div>Todays Weather</div>
+      <p className="text-2xl">Todays Weather</p>
       <div className="flex">
         <Card className="m-2 w-fit p-2">
           <div>Temperature</div>
