@@ -3,6 +3,7 @@ import { useGetGeoLocationByCityMutation, useGetWeatherByCityMutation } from '..
 import { Card, Loading, Search } from '../../ui/components';
 import Forecast from './Forecast';
 import Weather from './Weather';
+import { ConditionComponent } from '../../ui/components/ConditionComponent';
 
 const HomePage = () => {
   const [getGeoLocation, geoLocationStatus] = useGetGeoLocationByCityMutation();
@@ -64,7 +65,7 @@ const HomePage = () => {
       <div className="mt-2">
         <Search placeholder="Enter City" onSearch={handleSearch} />
       </div>
-      {weatherStatus.isSuccess && geoLocationStatus.isSuccess && (
+      <ConditionComponent showIf={weatherStatus.isSuccess && geoLocationStatus.isSuccess}>
         <div className="flex flex-col justify-center">
           <Card className="flex items-center justify-center mx-auto w-192 my-2">{renderGeoLocation()}</Card>
           <Card className="my-2">
@@ -74,13 +75,15 @@ const HomePage = () => {
             <Forecast city={city} geoLoc={geoLoc} />
           </Card>
         </div>
-      )}
-      {weatherStatus.isLoading && <Loading />}
-      {(weatherStatus.isError || geoLocationStatus.isError) && (
+      </ConditionComponent>
+      <ConditionComponent showIf={weatherStatus.isLoading}>
+        <Loading />
+      </ConditionComponent>
+      <ConditionComponent showIf={weatherStatus.isError || geoLocationStatus.isError}>
         <Card className="flex mt-2 w-72 p-5">
           <div>Failed to load Weather! Please check City you entered!</div>
         </Card>
-      )}
+      </ConditionComponent>
     </div>
   );
 };
