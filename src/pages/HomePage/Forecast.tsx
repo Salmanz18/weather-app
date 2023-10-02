@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useGetForecastByCityMutation } from '../../services/Api';
 import { Card } from '../../ui/components';
+import { DateUtil } from '../../utils/DateUtil';
+import { DateTimeFormats } from '../../enums/DateFormatTypes';
 
 const Forecast = ({ city, geoLoc }: ForecastProps) => {
   const [getForecast, forecastStatus] = useGetForecastByCityMutation();
@@ -19,7 +21,7 @@ const Forecast = ({ city, geoLoc }: ForecastProps) => {
         {forecastStatus.data?.list.map((item) => {
           return (
             <Card key={item.dt} className="m-2 w-fit p-2">
-              <div>{item.dt_txt}</div>
+              <div>{DateUtil.formatDate(new Date(item.dt_txt), DateTimeFormats.MMM_DD_YYYY_SPACE_TIME_AM, true)}</div>
               <div>Max. Temp: {item.main.temp_max}°C</div>
               <div>Min. Temp: {item.main.temp_min}°C</div>
               <div>Feels Like: {item.main.feels_like}°C</div>
